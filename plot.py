@@ -33,3 +33,4 @@ def plot_predictions(
         )
 
     plt.legend(prop={"size": 14})
+    plt.show(block=True)
