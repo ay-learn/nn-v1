@@ -2,6 +2,7 @@
 import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
+import os
 
 from leanr_algebra import LeanrAlgebra
 from plot import plot_predictions
@@ -41,3 +42,4 @@ with torch.inference_mode():
 
 
 plot_predictions(X_train, y_train, X_test, y_test, predictions=y_pred_test)
+os._exit(0)
