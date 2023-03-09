@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import matplotlib.pyplot as plt
 import torch
+import torch.nn as nn
 
 from leanr_algebra import LeanrAlgebra
 from plot import plot_predictions
@@ -17,14 +18,26 @@ X_test, y_test = X[split:], y[split:]
 
 torch.manual_seed(42)
 module_0 = LeanrAlgebra()
-with torch.inference_mode():
-    y_pred = module_0(X_test)
+# with torch.inference_mode():
+#     y_pred = module_0(X_test)
 # print(X, y_train)
 # # print(module_0)
 
 
-plot_predictions(X_train, y_train, X_test, y_test, predictions=y_pred)
+loss_fn = nn.L1Loss()
+optimizer = torch.optim.SGD(params=module_0.parameters(), lr=0.01)
 
-epochs = 1
+epochs = int(1000_000 * 0.01)
 for epoch in range(epochs):
-    print(epoch)
+    torch.manual_seed(42)
+    module_0.train()
+    optimizer.zero_grad()
+    loss_fn(module_0(X_train), y_train).backward()
+    optimizer.step()
+
+torch.manual_seed(42)
+with torch.inference_mode():
+    y_pred_test = module_0(X_test)
+
+
+plot_predictions(X_train, y_train, X_test, y_test, predictions=y_pred_test)
