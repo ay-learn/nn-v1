@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-import matplotlib.pyplot as plt
-import torch
-import torch.nn as nn
 import os
 
+import torch
+import torch.nn as nn
+
 from leanr_algebra import LeanrAlgebra
-from plot import plot_predictions
 
 # import torch.nn as nn
 
@@ -41,5 +40,7 @@ with torch.inference_mode():
     y_pred_test = module_0(X_test)
 
 
-plot_predictions(X_train, y_train, X_test, y_test, predictions=y_pred_test)
+# plot_predictions(X_train, y_train, X_test, y_test, predictions=y_pred_test)
+print(list(module_0.parameters()))
+print(module_0.state_dict())
 os._exit(0)
