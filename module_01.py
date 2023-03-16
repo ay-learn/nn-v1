@@ -6,9 +6,6 @@ import torch.nn as nn
 
 from leanr_algebra import LeanrAlgebra
 
-# import torch.nn as nn
-
-
 X = torch.arange(0, 1, 0.02)
 y = 0.7 * X + 0.3
 
@@ -18,22 +15,21 @@ X_test, y_test = X[split:], y[split:]
 
 torch.manual_seed(42)
 module_0 = LeanrAlgebra()
-# with torch.inference_mode():
-#     y_pred = module_0(X_test)
-# print(X, y_train)
-# # print(module_0)
 
 
+# Training + Testing
 loss_fn = nn.L1Loss()
 optimizer = torch.optim.SGD(params=module_0.parameters(), lr=0.01)
 
-epochs = int(1000_000 * 0.01)
+epochs = 10_000
 for epoch in range(epochs):
+    # Training
     torch.manual_seed(42)
     module_0.train()
     optimizer.zero_grad()
     loss_fn(module_0(X_train), y_train).backward()
     optimizer.step()
+    # Testing
 
 torch.manual_seed(42)
 with torch.inference_mode():
@@ -41,6 +37,5 @@ with torch.inference_mode():
 
 
 # plot_predictions(X_train, y_train, X_test, y_test, predictions=y_pred_test)
-print(list(module_0.parameters()))
 print(module_0.state_dict())
 os._exit(0)
