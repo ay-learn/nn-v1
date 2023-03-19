@@ -1,6 +1,7 @@
+PYTHON3=/home/mhamdi/miniconda3/envs/pyTorch-1.12.1/bin/python3
 
 module_01:
-	python3 module_01.py
+	$(PYTHON3) module_01.py
 
 module_02:
-	python3 module_02.py
+	$(PYTHON3) module_02.py'

@@ -20,8 +20,8 @@ def plot(X_train, y_train, X_test, y_test, predictions=None):
         )
 
     plt.legend(prop={"size": 14})
-    plt.show(block=True)
-    # plt.show()
+    # plt.show(block=True)
+    plt.show()
 
 
 def plot_predictions(X_train, y_train, X_test, y_test, predictions=None):

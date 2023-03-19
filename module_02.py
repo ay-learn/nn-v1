@@ -6,6 +6,7 @@ import torch
 from leanr_algebra import loss_fn
 from leanr_algebra import module_0
 from leanr_algebra import optimizer
+from plot import plot_predictions
 
 X = torch.arange(0, 1, 0.02)
 y = 0.7 * X + 0.3
@@ -38,6 +39,6 @@ with torch.inference_mode():
     y_pred_test = module_0(X_test)
 
 
-# plot_predictions(X_train, y_train, X_test, y_test, predictions=y_pred_test)
+plot_predictions(X_train, y_train, X_test, y_test, predictions=y_pred_test)
 print(module_0.state_dict())
 os._exit(0)
