@@ -1,9 +1,9 @@
 import multiprocessing as mp
+
 import matplotlib.pyplot as plt
 
-def plot(
-    X_train, y_train, X_test, y_test, predictions=None
-):
+
+def plot(X_train, y_train, X_test, y_test, predictions=None):
     """
     Plots training data, test data and compares predictions.
     """
@@ -20,10 +20,11 @@ def plot(
         )
 
     plt.legend(prop={"size": 14})
-    # plt.show(block=True)
-    plt.show()
+    plt.show(block=True)
+    # plt.show()
+
 
 def plot_predictions(X_train, y_train, X_test, y_test, predictions=None):
     p = mp.Process(target=plot, args=(X_train, y_train, X_test, y_test, predictions))
     p.start()
-    p.join(0.1) # Wait for 0.1 seconds for the process to start
+    p.join(0.1)  # Wait for 0.1 seconds for the process to start
