@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
-import os
-
 import torch
 
-from leanr_algebra import loss_fn
-from leanr_algebra import module_0
-from leanr_algebra import optimizer
-from plot import plot_predictions
+from leanr_algebraV2 import loss_fn
+from leanr_algebraV2 import model
+from leanr_algebraV2 import optimizer
+from plot import *
+from save import model_path
 
-X = torch.arange(0, 1, 0.02)
+# from plot import plot_model_loss
+# from plot import plot_predictions
+
+X = torch.arange(0, 1, 0.02).unsqueeze(dim=1)
 y = 0.7 * X + 0.3
 
 split = int(0.8 * len(X[:]))
@@ -18,27 +20,49 @@ X_test, y_test = X[split:], y[split:]
 
 loss_train = []
 loss_test = []
-epoc_count = []
+epoch_count = []
 
 # epochs = int(1000_000 * 0.01)
 epochs = 100
 
 for epoch in range(epochs):
-    module_0.train()
+    model.train()
+
     optimizer.zero_grad()
-    loss = loss_fn(module_0(X_train), y_train).backward()
+
+    y_pred = model(X_train)
+    loss_value = loss_fn(y_pred, y_train)
+    loss_value.backward()
+
     optimizer.step()
     # Test
+    model.eval()
     with torch.inference_mode():
-        y_pred_test = module_0(X_test)
-    if epoch % 10 == 10:
-        loss_train.append(loss.detach().numpy())
+        y_pred_test = model(X_test)
 
-torch.manual_seed(42)
+        loss_test_value = loss_fn(y_pred_test, y_test)
+    # Diff
+    if epoch % 10 == 0:
+        epoch_count.append(epoch)
+        loss_train.append(loss_value.detach().numpy())
+        loss_test.append(loss_test_value.detach().numpy())
+
+
 with torch.inference_mode():
-    y_pred_test = module_0(X_test)
+    y_preds = model(X_test)
+# plot_predictions(X_train, y_train, X_test, y_test, predictions=y_preds)
+# plot_model2_loss(epoch_count, loss_train, loss_test)
 
 
-plot_predictions(X_train, y_train, X_test, y_test, predictions=y_pred_test)
-print(module_0.state_dict())
-os._exit(0)
+PATH_MODEL = model_path("02_pytorch.pth")
+
+# torch.save(model.state_dict(), PATH_MODEL)
+
+# from leanr_algebraV2 import LeanrAlgebraV2
+# model_eval = LeanrAlgebraV2()
+# model_eval.load_state_dict(torch.load(PATH_MODEL))
+# model_eval.eval()
+# with torch.inference_mode():
+#     y2=model_eval(X_test)
+#
+# plot_predictions(X_train, y_train, X_test, y_test, predictions=y2)

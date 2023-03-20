@@ -1,9 +1,7 @@
-import multiprocessing as mp
-
 import matplotlib.pyplot as plt
 
 
-def plot(X_train, y_train, X_test, y_test, predictions=None):
+def plot_predictions(X_train, y_train, X_test, y_test, predictions=None):
     """
     Plots training data, test data and compares predictions.
     """
@@ -24,7 +22,12 @@ def plot(X_train, y_train, X_test, y_test, predictions=None):
     plt.show()
 
 
-def plot_predictions(X_train, y_train, X_test, y_test, predictions=None):
-    p = mp.Process(target=plot, args=(X_train, y_train, X_test, y_test, predictions))
-    p.start()
-    p.join(0.1)  # Wait for 0.1 seconds for the process to start
+def plot_model2_loss(epoch_count, loss_train, loss_test):
+    plt.figure(figsize=(10, 7))
+    plt.plot(epoch_count, loss_train,label="Training loss")
+    plt.plot(epoch_count, loss_test,label="Test loss")
+    # plt.legend(prop={"size": 14})
+    plt.ylabel("Loss")
+    plt.xlabel("Epochs")
+    plt.legend()
+    plt.show()
