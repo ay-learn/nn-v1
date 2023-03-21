@@ -46,12 +46,12 @@ for epoch in range(epochs):
         epoch_count.append(epoch)
         loss_train.append(loss_value.detach().numpy())
         loss_test.append(loss_test_value.detach().numpy())
+    # Fin Training
 
 
-with torch.inference_mode():
-    y_preds = model(X_test)
-# plot_predictions(X_train, y_train, X_test, y_test, predictions=y_preds)
-# plot_model2_loss(epoch_count, loss_train, loss_test)
+plot_model_v01_loss(epoch_count, loss_train, loss_test)
 
 
-PATH_MODEL = model_path("02_pytorch.pth")
+# Save Model
+PATH_MODEL = model_path("v01.1_pytorch.pth")
+torch.save(model.state_dict(), PATH_MODEL)

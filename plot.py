@@ -22,7 +22,7 @@ def plot_predictions(X_train, y_train, X_test, y_test, predictions=None):
     plt.show()
 
 
-def plot_model2_loss(epoch_count, loss_train, loss_test):
+def plot_model_v01_loss(epoch_count, loss_train, loss_test):
     plt.figure(figsize=(10, 7))
     plt.plot(epoch_count, loss_train,label="Training loss")
     plt.plot(epoch_count, loss_test,label="Test loss")
